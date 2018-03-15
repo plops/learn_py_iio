@@ -20,27 +20,7 @@
 	  "#  define INT_MAX       2147483647~%")
   (format s "#include \"/usr/include/iio.h\"~%"))
 
-(autowrap::run-check autowrap::*c2ffi-program*
-		     (autowrap::list "/tmp/iio0.h"
-				     "-D" "null"
-				     "-M" "/tmp/iio_macros.h"
-				     "-A" "x86_64-pc-linux-gnu"))
-
-(with-open-file (s "/tmp/iio1.h"
-		   :direction :output
-		   :if-does-not-exist :create
-		   :if-exists :supersede)
-  
-  (format s "#include \"/tmp/iio0.h\"~%")
-  #+nil (format s "#include \"/tmp/iio_macros.h\"~%"))
-
-;; c2ffi  /usr/include/iio.h -i /usr/include/linux -x c --std=c99 --with-macro-defs -i   /usr/lib64/gcc/x86_64-pc-linux-gnu/5.4.0/include/ 2>&1
-
- 
-
-
-
-(autowrap:c-include "/tmp/iio1.h"
+(autowrap:c-include "/tmp/iio0.h"
                     :spec-path *spec-path*
 		    :exclude-definitions
 		    (".*")
@@ -69,19 +49,14 @@
                                    "x86_64-pc-windows-msvc"
                                    "x86_64-unknown-freebsd"
 				   "x86_64-unknown-openbsd")
-                    #+nil :exclude-sources #+nil ( "/usr/include/_G_config.h"
-						   "/usr/include/bits/stdio_lim.h"
-						   "/usr/include/bits/sys_errlist.h"
-						   "/usr/include/bits/types.h"
-						   "/usr/include/bits/typesizes.h"
-						   "/usr/include/bits/wordsize.h"
-						   "/usr/include/features.h"
-						   "/usr/include/fftw3.h"
-						   "/usr/include/gnu/stubs-64.h"
-						   "/usr/include/libio.h"
-						   "/usr/include/stdc-predef.h"
-						   "/usr/include/stdio.h"
-						   "/usr/include/sys/cdefs.h"
-						   "/usr/include/wchar.h")
-					;:include-sources ("/usr/include/limits.h")
 		    :trace-c2ffi t)
+
+
+
+
+(defparameter *sctx* (iio-create-scan-context (cffi:null-pointer) 0))
+(struct iio-context-info)
+
+(iio-scan-context-get-info-list *sctx* )
+
+(defparameter *ctx* (iio-create-default-context))
