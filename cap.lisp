@@ -52,11 +52,16 @@
 		    :trace-c2ffi t)
 
 
+#+nil
+((defparameter *sctx* (iio-create-scan-context (cffi:null-pointer) 0))
+ (struct iio-context-info)
+
+ (iio-scan-context-get-info-list *sctx* )
+
+ (defparameter *ctx* (iio-create-default-context)))
 
 
-(defparameter *sctx* (iio-create-scan-context (cffi:null-pointer) 0))
-(struct iio-context-info)
-
-(iio-scan-context-get-info-list *sctx* )
-
-(defparameter *ctx* (iio-create-default-context))
+(defparameter *ctx* (iio-create-context-from-uri "usb:1.4.5"))
+(defparameter *rx-stream-dev* (iio-context-find-device *ctx* "cf-ad9361-lpc"))
+"A_BALANCED"
+examples/ad9361-iiostream.c
