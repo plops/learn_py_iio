@@ -1,8 +1,10 @@
 ;; c2ffi from arch linux
 ;; sudo mount /dev/mmcblk0p3 /mnt; export PATH=$PATH:/mnt/usr/local/bin
 
+
+
 (ql:quickload :cl-autowrap)
-(defparameter *spec-path* (merge-pathnames "stage/py_learn_iio/"
+(defparameter *spec-path* (merge-pathnames "stage/learn_py_iio/"
 					   (user-homedir-pathname)))
 
 (cffi:load-foreign-library "/usr/lib/libiio.so")
@@ -33,13 +35,24 @@
   #+nil (format s "#include \"/tmp/iio_macros.h\"~%"))
 
 ;; c2ffi  /usr/include/iio.h -i /usr/include/linux -x c --std=c99 --with-macro-defs -i   /usr/lib64/gcc/x86_64-pc-linux-gnu/5.4.0/include/ 2>&1
+
  
 
 
 
 (autowrap:c-include "/tmp/iio1.h"
                     :spec-path *spec-path*
-		    :sysincludes '("/usr/include")
+		    :sysincludes '("/usr/include" "/usr/include/linux"
+				   "/usr/lib64/clang/3.9.1/include/"
+				   #+nil"/usr/lib64/gcc/x86_64-pc-linux-gnu/5.4.0/include")
+		    :exclude-sources ("limits.h"
+				      "stdint.h"
+				      "stdlib.h"
+				      "stddef.h"
+				      )
+		    :exclude-constants (".*")
+		    :exclude-definitions ("^_" "^va_list$")
+		    :no-accessors t
                     :exclude-arch ("arm-pc-linux-gnu"
                                    "i386-unknown-freebsd"
 				   "i386-unknown-openbsd"
