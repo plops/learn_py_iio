@@ -42,6 +42,11 @@
 
 (autowrap:c-include "/tmp/iio1.h"
                     :spec-path *spec-path*
+		    :exclude-definitions
+		    (".*")
+		    :include-definitions
+		    ("^iio.*"
+		     "^IIO.*")
 		    :sysincludes '("/usr/include" "/usr/include/linux"
 				   "/usr/lib64/clang/3.9.1/include/"
 				   #+nil"/usr/lib64/gcc/x86_64-pc-linux-gnu/5.4.0/include")
