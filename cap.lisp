@@ -159,15 +159,20 @@ autowrap::*foreign-functions*
 (iio-buffer-refill *buf*)
 
 (let ((p-inc (iio-buffer-step *buf*))
-      (p-enc (iio-buffer-end *buf*))
-      )
-  (loop for (setf p-dat (iio-buffer-first *buf* *i*))
-     while (< p-dat p-end)
-     do
-       (incf p-dat p-inc)
-       (incf t-dat p-inc)
-       (let ((i (cffi:mem-aref p-dat short 0))
-	     (q (cffi:mem-aref p-dat short 1))))))
+      (p-end (iio-buffer-end *buf*))
+      (p-dat (iio-buffer-first *buf* *i*)))
+  (loop 
+     do       
+       (setf p-dat (sb-sys:sap+ p-dat p-inc)
+	     ;t-dat (sb-sys:sap+ t-dat p-inc)
+	     )
+      
+       (let ((i (cffi:mem-aref p-dat :uint16 0))
+	     (q (cffi:mem-aref p-dat :uint16 1)))
+	 (format t
+		 "~a~%" (list i q)))
+
+     until (cffi:pointer-eq p-dat p-end)))
 (iio-buffer-destroy *buf*)
 (iio-context-destroy *ctx*)
 
