@@ -13,25 +13,28 @@
 		   :direction :output
 		   :if-does-not-exist :create
 		   :if-exists :supersede)
-  (format s "#include \"/usr/lib64/gcc/x86_64-pc-linux-gnu/5.4.0/include/stddef.h\"~%") 
-  (format s "#include \"/usr/lib64/gcc/x86_64-pc-linux-gnu/5.4.0/include/stdbool.h\"~%")
+  ;(format s "#include \"/usr/lib64/gcc/x86_64-pc-linux-gnu/5.4.0/include/stddef.h\"~%") 
+  ;(format s "#include \"/usr/lib64/gcc/x86_64-pc-linux-gnu/5.4.0/include/stdbool.h\"~%")
   ;(format s "#include \"/usr/include/limits.h\"~%") 
-  (format s
-	  "#  define INT_MAX       2147483647~%")
+					;(format s "#  define INT_MAX       2147483647~%")
+  (format s "#include <stddef.h>")
   (format s "#include \"/usr/include/iio.h\"~%"))
 
 (autowrap:c-include "/tmp/iio0.h"
                     :spec-path *spec-path*
-		    :exclude-definitions
-		    (".*")
+		    :exclude-definitions (".*")
 		    :include-definitions
 		    ("^iio.*"
 		     "^IIO.*"
+		     "size_t"
+		     "uint32_t"
+		     "ptrdiff_t"
 		    )
 		    :sysincludes '("/usr/include" "/usr/include/linux"
-				   "/usr/lib64/clang/3.9.1/include/"
+				   #+nil "/usr/lib64/clang/3.9.1/include/"
+				   "/usr/lib64/clang/5.0.1/include/"
 				   #+nil"/usr/lib64/gcc/x86_64-pc-linux-gnu/5.4.0/include")
-		    :exclude-sources ("limits.h"
+		    #+nil :exclude-sources #+nil ("limits.h"
 				      "stdint.h"
 				      "stdlib.h"
 				      "stddef.h"
