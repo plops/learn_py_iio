@@ -11,16 +11,14 @@ print(len(ctxs))
 
 uri = next(iter(ctxs),None)
 
-ctx3 = iio.Context(uri)
+ctx = iio.Context(uri)
 
 
-prin3t(ctx.name)
+print(ctx.name)
 
 print(ctx.attrs)
 
 #{'hw_model': 'Analog Devices PlutoSDR Rev.B (Z7010-AD9363)', 'usb,release': '2.0', 'ad9361-phy,xo_correction': '40000035', 'usb,idVendor': '0456', 'usb,vendor': 'Analog Devices Inc.', 'usb,product': 'PlutoSDR (ADALM-PLUTO)', 'usb,idProduct': 'b673', 'fw_version': 'v0.26', 'hw_model_variant': '1', 'local,kernel': '4.9.0-10194-g40c2158', 'hw_serial': '', 'ad9361-phy,model': 'ad9364'}
-
-print(ctx.devices)
 
 [print(dev.id + ' ' + dev.name) for dev in ctx.devices]
 
@@ -30,33 +28,37 @@ print(ctx.devices)
 # iio:device2 xadc
 # iio:device0 adm1177
 
-
-[print(dev.name + ' ' + str(dev.channels)) for dev in ctx.devices]
+# [print(dev.name + ' ' + str(dev.channels)) for dev in ctx.devices]
 
 dev = ctx.find_device('cf-ad9361-lpc')
 
-c0 = dev.find_channel('voltage0',True)
-c1 = dev.find_channel('voltage1',True)
 # https://github.com/analogdevicesinc/libiio/issues/109
 # https://ez.analog.com/thread/92031-ad9361-python-binding
 print(dev.channels)
-
-print(dev.enabled)
-
 print(dev.sample_size)
 
 print(dev.channels[0].enabled) 
 dev.channels[0].enabled = True
 dev.channels[1].enabled = True
 
-
-c0.enabled = True
-c1.enabled = True
-
 buf = iio.Buffer(dev,4096,cyclic=False)
 
 buf.refill()
 
 x = buf.read()
-print(x)
+#print(x)
 
+import numpy as np
+
+d = np.frombuffer(x,dtype=np.int16)
+
+import matplotlib.pyplot as plt
+
+import numpy.fft
+
+print([0,1,2,3,4][1::2])
+
+k = numpy.fft.fftshift(numpy.fft.fft(d[::2]+1j*d[1::2]))
+
+plt.plot(np.abs(k))
+plt.show()
