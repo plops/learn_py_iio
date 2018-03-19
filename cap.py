@@ -11,10 +11,10 @@ print(len(ctxs))
 
 uri = next(iter(ctxs),None)
 
-ctx = iio.Context(uri)
+ctx3 = iio.Context(uri)
 
 
-print(ctx.name)
+prin3t(ctx.name)
 
 print(ctx.attrs)
 
@@ -37,3 +37,24 @@ dev = ctx.find_device('cf-ad9361-lpc')
 
 c0 = dev.find_channel('voltage0',True)
 c1 = dev.find_channel('voltage1',True)
+# https://github.com/analogdevicesinc/libiio/issues/109
+# https://ez.analog.com/thread/92031-ad9361-python-binding
+print(dev.channels)
+
+print(dev.sample_size)
+
+print(dev.channels[0].enabled)
+dev.channels[0].enabled = True
+dev.channels[1].enabled = True
+
+
+c0.enabled = True
+c1.enabled = True
+
+buf = iio.Buffer(dev,4096,cyclic=False)
+
+buf.refill()
+
+x = buf.read()
+print(x)
+
