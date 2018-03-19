@@ -41,9 +41,11 @@ c1 = dev.find_channel('voltage1',True)
 # https://ez.analog.com/thread/92031-ad9361-python-binding
 print(dev.channels)
 
+print(dev.enabled)
+
 print(dev.sample_size)
 
-print(dev.channels[0].enabled)
+print(dev.channels[0].enabled) 
 dev.channels[0].enabled = True
 dev.channels[1].enabled = True
 
