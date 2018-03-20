@@ -31,7 +31,17 @@ print(ctx.attrs)
 # [print(dev.name + ' ' + str(dev.channels)) for dev in ctx.devices]
 
 dev = ctx.find_device('cf-ad9361-lpc')
+phy = ctx.find_device('ad9361-phy')
 
+print( len(phy.channels) )
+
+for i in range(len(phy.channels) ):
+    print(phy.channels[i].name)
+# print rx lo
+print(phy.channels[0].attrs['frequency'].value)
+print(type(int(90e6)))
+phy.channels[0].attrs['frequency'].value = str(int(90e6)) 
+    
 # https://github.com/analogdevicesinc/libiio/issues/109
 # https://ez.analog.com/thread/92031-ad9361-python-binding
 print(dev.channels)
