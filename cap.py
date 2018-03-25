@@ -2,6 +2,28 @@
 # https://mirrors.dotsrc.org/fosdem/2018/AW1.120/plutosdr.webm
 # https://wiki.analog.com/resources/tools-software/linux-software/fmcomms2_plugin
 import iio, struct, time
+import scipy.signal
+import numpy as np
+import matplotlib.pyplot as plt
+ctxs = iio.scan_contexts()
+uri = next(iter(ctxs),None)
+ctx = iio.Context(uri)
+dev = ctx.find_device('cf-ad9361-lpc')
+phy = ctx.find_device('ad9361-phy')
+phy.channels[0].attrs['frequency'].value = str(int(1575.42e6)) 
+dev.channels[0].enabled = True
+dev.channels[1].enabled = True
+buf = iio.Buffer(dev,4096,cyclic=False)
+ys = []
+for i in range(1024):
+    buf.refill()
+    ys.append(buf.read())
+d=np.frombuffer(np.array([inner for outer in ys for inner in outer]),dtype=np.int16)
+q= d[::2]+1j*d[1::2]
+f,t,z=scipy.signal.stft(q[0:32*4096])
+plt.imshow(np.abs(z))
+plt.show()
+
 
 print(iio.version)
 
@@ -40,7 +62,7 @@ for i in range(len(phy.channels) ):
 # print rx lo
 print(phy.channels[0].attrs['frequency'].value)
 print(type(int(90e6)))
-phy.channels[0].attrs['frequency'].value = str(int(90e6)) 
+phy.channels[0].attrs['frequency'].value = str(int(2412e6)) 
     
 # https://github.com/analogdevicesinc/libiio/issues/109
 # https://ez.analog.com/thread/92031-ad9361-python-binding
@@ -71,4 +93,26 @@ print([0,1,2,3,4][1::2])
 k = numpy.fft.fftshift(numpy.fft.fft(d[::2]+1j*d[1::2]))
 
 plt.plot(np.abs(k))
+plt.show()
+
+
+ys = []
+for i in range(1024):
+    buf.refill()
+    ys.append(buf.read())
+1
+d=np.frombuffer(np.array([inner for outer in ys for inner in outer]),dtype=np.int16)
+print(d.shape)
+
+d = np.array([np.frombuffer(y,dtype=np.int16) for y in ys])
+
+q= d[::2]+1j*d[1::2]
+
+f,t,z=scipy.signal.stft(q[0:32*4096])
+print(z.shape)
+plt.pcolormesh(f,t,np.abs(z))
+plt.imshow(np.abs(z))
+s.shape
+
+plt.plot(d[::2])
 plt.show()
