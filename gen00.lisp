@@ -139,7 +139,13 @@ Options:
 					     ))
 				  (if (< 0 (len dev.attrs))
 				      (for ((ntuple k v) (dev.attrs.viewitems))
-				       ((dot (aref l 0)
+					   (try
+					    (do0
+					     (setf val v.value)
+					     )
+					    ("OSError as e"
+					     (setf val e)))
+					   ((dot (aref l 0)
 					     appendRow)
 					(list
 					 (qg.QStandardItem
@@ -147,7 +153,7 @@ Options:
 					       (format k)))
 					 (qg.QStandardItem
 					  (dot (string "{}")
-					       (format v.value)))))))
+					       (format val)))))))
 				  
 				  (parent.appendRow
 				   l))

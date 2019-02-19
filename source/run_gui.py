@@ -46,7 +46,11 @@ class PlutoTreeView(qw.QWidget):
             l=[qg.QStandardItem("{}".format(dev.name))]
             if ( ((0)<(len(dev.attrs))) ):
                 for k, v in dev.attrs.viewitems():
-                    (l[0].appendRow)(([qg.QStandardItem("{}".format(k)), qg.QStandardItem("{}".format(v.value))]))
+                    try:
+                        val=v.value
+                    except OSError as e:
+                        val=e
+                    (l[0].appendRow)(([qg.QStandardItem("{}".format(k)), qg.QStandardItem("{}".format(val))]))
             parent.appendRow(l)
         self.model.appendRow(parent)
         self.main_layout=qw.QHBoxLayout()
