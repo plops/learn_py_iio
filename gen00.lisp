@@ -174,6 +174,8 @@ Options:
 				    `(,(make-keyword (string-upcase (format nil "~a_max" e))) (aref max ,i))))))))
 
 	    #+nil(setf r (make_rect_c))
+;>>> [d.name for d in ctx.devices]
+;[u'cf-ad9361-dds-core-lpc', u'ad9361-phy', u'cf-ad9361-lpc', u'xadc', u'adm1177']
 
 	    (do0
 	     (setf ctxs (iio.scan_contexts)
