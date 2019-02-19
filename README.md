@@ -15,8 +15,15 @@ IIO context has 5 devices:
         iio:device2: xadc
                 1 device-specific attributes found:
         iio:device0: adm1177
-
 ```
+Aurman and cmake only install iio for python 3. ccmake only shows PYTHON_BINDINGS. I just install it manually after the build:
+```
+cd bindings/python/
+[martin@gpd python]$ ls
+CMakeFiles  Makefile  build  cmake_install.cmake  setup.py
+[martin@gpd python]$ sudo python2 setup.py install
+```
+
 
 `git clone https://github.com/analogdevicesinc/libad9361-iio`
 
