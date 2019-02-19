@@ -111,24 +111,41 @@ Options:
 		     (self.tree_view.setModel self.model)
 		     
 		     (self.tree_view.setUniformRowHeights True)
-		     ,@(loop for e in '(attrs) and i from 0 collect
-			    `(do0
+		     (do0
 			     (setf parent (qg.QStandardItem
-					   (string ,e)))
+					   (string attrs)))
 			     (for ((ntuple key value)
-				   (dot ctx ,e (viewitems)))
-				  (parent.appendRow
-				   (list (qg.QStandardItem
-					  (dot (string "{}")
-					       (format key)))
-					 (qg.QStandardItem
-					  (dot (string "{}")
-					       (format value))))))
+					   (dot ctx.attrs (viewitems)))
+				      (parent.appendRow
+				       (list (qg.QStandardItem
+					      (dot (string "{}")
+						   (format key)))
+					     (qg.QStandardItem
+					      (dot (string "{}")
+						   (format value))))))
 			     (self.model.appendRow parent)
-			     (self.tree_view.setFirstColumnSpanned
+			     #+nil (self.tree_view.setFirstColumnSpanned
 			      ,i
 			      (self.tree_view.rootIndex)
-			      True)))
+			      True))
+
+		     (do0
+			     (setf parent (qg.QStandardItem
+					   (string devices)))
+			     (for (dev ctx.devices)
+				  (setf l (list (qg.QStandardItem
+					      (dot (string "{}")
+						   (format dev.name)))
+					     ))
+				  (if (< 0 (len dev.attrs))
+				      (l.append (qg.QStandardItem
+					      (dot (string "{}")
+						   (format dev.attrs)))))
+				  
+				  (parent.appendRow
+				   l))
+			     (self.model.appendRow parent))
+
 		     (do0
 		      (setf self.main_layout (qw.QHBoxLayout))
 		      (self.main_layout.addWidget self.tree_view)
