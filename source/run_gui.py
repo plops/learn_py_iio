@@ -25,6 +25,7 @@ import traceback
 import PySide2.QtWidgets as qw
 import PySide2.QtCore as qc
 import PySide2.QtGui as qg
+import iio
 args=docopt.docopt(__doc__, version="0.0.1")
 if ( args["--verbose"] ):
     print(args)
@@ -72,9 +73,17 @@ class MainWindow(qw.QMainWindow):
     @qc.Slot()
     def exit_app(self, checked):
         sys.exit()
-df=pd.DataFrame(None)
+ctxs=iio.scan_contexts()
+uri=next(iter(ctxs), None)
+ctx=iio.Context(uri)
+dev=ctx.find_device("cf-ad9361-lpc")
+phy=ctx.find_device("ad9361-phy")
+print(iio.version)
+print(ctx.name)
+print(ctx.attrs)
+df=pd.DataFrame([ctx.attrs])
 app=qw.QApplication(sys.argv)
-widget=PandasView(df)
+widget=PandasView(df.iloc[0].to_frame())
 win=MainWindow(widget)
 win.show()
 sys.exit(app.exec_())

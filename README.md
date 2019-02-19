@@ -28,7 +28,7 @@ CMakeFiles  Makefile  build  cmake_install.cmake  setup.py
 `git clone https://github.com/analogdevicesinc/libad9361-iio`
 
 
-`https://github.com/analogdevicesinc/plutosdr-fw` seems to contain the firmware sources, I haven't tried building my own yet
+`https://github.com/analogdevicesinc/plutosdr-fw` seems to contain the firmware sources, I haven't tried building it, yet
 
 
 # References:

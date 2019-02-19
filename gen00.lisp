@@ -46,7 +46,8 @@ Options:
 	    (imports ((qw PySide2.QtWidgets)
 		      (qc PySide2.QtCore)
 		      (qg PySide2.QtGui)))
-
+	    (imports (iio))
+	    
 	    (setf args (docopt.docopt __doc__ :version (string "0.0.1")))
 	    (if (aref args (string "--verbose"))
 		(print args))
@@ -174,12 +175,22 @@ Options:
 
 	    #+nil(setf r (make_rect_c))
 
-	    
-	    (setf df (pd.DataFrame None))
+	    (do0
+	     (setf ctxs (iio.scan_contexts)
+		   uri (next (iter ctxs) None)
+		   ctx (iio.Context uri)
+		   dev (ctx.find_device (string "cf-ad9361-lpc"))
+		   phy (ctx.find_device (string "ad9361-phy"))
+		   )
+	     (print iio.version)
+	     (print ctx.name)
+	     (print ctx.attrs))
+	    (setf df (pd.DataFrame (list ctx.attrs)))
 	    
 	    (do0		 ;if (== __name__ (string "__main__"))
 	     (setf app (qw.QApplication sys.argv)
-		   widget (PandasView df)
+		   widget (PandasView (dot (aref df.iloc 0)
+					   (to_frame)))
 		   win (MainWindow widget))
 	     
 	     (win.show)
