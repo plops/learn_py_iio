@@ -138,9 +138,12 @@ Options:
 						   (format dev.name)))
 					     ))
 				  (if (< 0 (len dev.attrs))
-				      (l.append (qg.QStandardItem
-					      (dot (string "{}")
-						   (format dev.attrs)))))
+				      (for ((ntuple k v) (dev.attrs.viewitems))
+				       ((dot (aref l 0)
+					     appendRow)
+					(qg.QStandardItem
+					 (dot (string "{}")
+					      (format k))))))
 				  
 				  (parent.appendRow
 				   l))

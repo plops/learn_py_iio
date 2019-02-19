@@ -45,7 +45,8 @@ class PlutoTreeView(qw.QWidget):
         for dev in ctx.devices:
             l=[qg.QStandardItem("{}".format(dev.name))]
             if ( ((0)<(len(dev.attrs))) ):
-                l.append(qg.QStandardItem("{}".format(dev.attrs)))
+                for k, v in dev.attrs.viewitems():
+                    (l[0].appendRow)((qg.QStandardItem("{}".format(k))))
             parent.appendRow(l)
         self.model.appendRow(parent)
         self.main_layout=qw.QHBoxLayout()
