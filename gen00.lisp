@@ -253,7 +253,9 @@ Options:
 		   )
 	     (print iio.version)
 	     (print ctx.name)
-	     (print ctx.attrs))
+	     (print ctx.attrs)
+	     (imports (xml.etree.ElementTree))
+	     (setf ctx_xml (xml.etree.ElementTree.fromstring ctx.xml)))
 	    (setf df (pd.DataFrame (list ctx.attrs)))
 	    
 	    (do0		 ;if (== __name__ (string "__main__"))

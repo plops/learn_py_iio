@@ -71,6 +71,8 @@ phy=ctx.find_device("ad9361-phy")
 print(iio.version)
 print(ctx.name)
 print(ctx.attrs)
+import xml.etree.ElementTree
+ctx_xml=xml.etree.ElementTree.fromstring(ctx.xml)
 df=pd.DataFrame([ctx.attrs])
 app=qw.QApplication(sys.argv)
 widget=PlutoTreeView(ctx)
