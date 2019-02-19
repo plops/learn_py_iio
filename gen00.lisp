@@ -141,9 +141,13 @@ Options:
 				      (for ((ntuple k v) (dev.attrs.viewitems))
 				       ((dot (aref l 0)
 					     appendRow)
-					(qg.QStandardItem
-					 (dot (string "{}")
-					      (format k))))))
+					(list
+					 (qg.QStandardItem
+					  (dot (string "{}")
+					       (format k)))
+					 (qg.QStandardItem
+					  (dot (string "{}")
+					       (format v.value)))))))
 				  
 				  (parent.appendRow
 				   l))
