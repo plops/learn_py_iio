@@ -154,10 +154,28 @@ Options:
 					 (qg.QStandardItem
 					  (dot (string "{}")
 					       (format val)))))))
+				  (if (< 0 (len dev.debug_attrs))
+				      (for ((ntuple k v) (dev.debug_attrs.viewitems))
+					   (try
+					    (do0
+					     (setf val v.value)
+					     )
+					    ("OSError as e"
+					     (setf val e)))
+					   ((dot (aref l 0)
+					     appendRow)
+					(list
+					 (qg.QStandardItem
+					  (dot (string "{}")
+					       (format k)))
+					 (qg.QStandardItem
+					  (dot (string "{}")
+					       (format val)))))))
 				  
 				  (parent.appendRow
 				   l))
 			     (self.model.appendRow parent))
+		     
 
 		     (do0
 		      (setf self.main_layout (qw.QHBoxLayout))
