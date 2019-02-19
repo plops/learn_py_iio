@@ -35,3 +35,5 @@ CMakeFiles  Makefile  build  cmake_install.cmake  setup.py
 
 * https://wiki.analog.com/university/tools/pluto/users/customizing ssh root@192.168.2.1  password=analog
 * broadcom wifi as sdr https://github.com/seemoo-lab/mobisys2018_nexmon_software_defined_radio
+* https://www.analog.com/media/en/technical-documentation/data-sheets/ad9364.pdf datasheet
+* https://ez.analog.com/university-program/f/q-a/97283/ad9361-iiostream-on-adalm-pluto bare metal transmitting

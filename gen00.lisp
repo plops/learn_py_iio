@@ -166,7 +166,7 @@ Options:
 					     appendRow)
 					(list
 					 (qg.QStandardItem
-					  (dot (string "{}")
+					  (dot (string "{} [dbg]")
 					       (format k)))
 					 (qg.QStandardItem
 					  (dot (string "{}")
