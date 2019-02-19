@@ -51,76 +51,84 @@ Options:
 	    (setf args (docopt.docopt __doc__ :version (string "0.0.1")))
 	    (if (aref args (string "--verbose"))
 		(print args))
-	    
-	    (class PandasTableModel (qc.QAbstractTableModel)
-		   (def __init__ (self dataframe &key (parent None))
-		     (qc.QAbstractTableModel.__init__ self)
-		     (setf self.dataframe dataframe))
-		   (def flags (self index)
-		     (if (not (index.isValid))
-			 (return None))
-		     (return (or qc.Qt.ItemIsEnabled qc.Qt.ItemIsSelectable)))
-		   (def rowCount (self *args **kwargs)
-		     (return (len self.dataframe.index)))
-		   (def columnCount (self *args **kwargs)
-		     (return (len self.dataframe.columns)))
-		   (def headerData (self section orientation
-					 role)
-		     (if (!= qc.Qt.DisplayRole role)
-			 (return None))
-		     (try
+	    #+nil(do0
+	     (class PandasTableModel (qc.QAbstractTableModel)
+		    (def __init__ (self dataframe &key (parent None))
+		      (qc.QAbstractTableModel.__init__ self)
+		      (setf self.dataframe dataframe))
+		    (def flags (self index)
+		      (if (not (index.isValid))
+			  (return None))
+		      (return (or qc.Qt.ItemIsEnabled qc.Qt.ItemIsSelectable)))
+		    (def rowCount (self *args **kwargs)
+		      (return (len self.dataframe.index)))
+		    (def columnCount (self *args **kwargs)
+		      (return (len self.dataframe.columns)))
+		    (def headerData (self section orientation
+					  role)
+		      (if (!= qc.Qt.DisplayRole role)
+			  (return None))
+		      (try
+		       (do0
+			(if (== qc.Qt.Horizontal orientation)
+			    (return (aref ("list" self.dataframe.columns) section)))
+			(if (== qc.Qt.Vertical orientation)
+			    (return (aref ("list" self.dataframe.index) section))))
+		       (IndexError
+			(return None))))
+		    (def data (self index role)
+		      (if (!= qc.Qt.DisplayRole role)
+			  (return None))
+		      (if (not (index.isValid))
+			  (return None))
+		      (return (str (aref self.dataframe.iloc
+					 (index.row)
+					 (index.column))))))
+	     
+
+	     (class PandasView (qw.QWidget)
+		    (def __init__ (self df)
+		      (dot (super PandasView self)
+			   (__init__))
+		      (setf self.model (PandasTableModel df)
+			    self.table_view (qw.QTableView)
+			    )
+		      (self.table_view.setModel self.model)
 		      (do0
-		       (if (== qc.Qt.Horizontal orientation)
-			   (return (aref ("list" self.dataframe.columns) section)))
-		       (if (== qc.Qt.Vertical orientation)
-			   (return (aref ("list" self.dataframe.index) section))))
-		      (IndexError
-		       (return None))))
-		   (def data (self index role)
-		     (if (!= qc.Qt.DisplayRole role)
-			 (return None))
-		     (if (not (index.isValid))
-			 (return None))
-		     (return (str (aref self.dataframe.iloc
-					(index.row)
-					(index.column))))))
-	    
+		       (setf self.main_layout (qw.QHBoxLayout))
+		       (self.main_layout.addWidget self.table_view)
+		       (self.setLayout self.main_layout))
+		      )))
 
-	    (class PandasView (qw.QWidget)
-		   (def __init__ (self df)
-		     (dot (super PandasView self)
-			  (__init__))
-		     (setf self.model (PandasTableModel df)
-			   self.table_view (qw.QTableView)
-			   )
-		     (self.table_view.setModel self.model)
-		     (do0
-		      (setf self.main_layout (qw.QHBoxLayout))
-		      (self.main_layout.addWidget self.table_view)
-		      (self.setLayout self.main_layout))
-		     ))
-
-	    (class DictTreeView (qw.QWidget)
-		   (def __init__ (self dics)
-		     (dot (super DictTreeView self)
+	    (class PlutoTreeView (qw.QWidget)
+		   (def __init__ (self ctx )
+		     (dot (super PlutoTreeView self)
 			  (__init__))
 		     (setf self.model (qg.QStandardItemModel)
 			   self.tree_view (qw.QTreeView))
+		     (self.model.setHorizontalHeaderLabels
+		      (list (string "key") (string "value")))
 		     (self.tree_view.setModel self.model)
+		     
 		     (self.tree_view.setUniformRowHeights True)
-		     (for (i (range 3))
-			  (setf parent (qg.QStandardItem
-					(dot (string "dev{}")
-					     (format i))))
-			  (for (j (range 2))
-			       (parent.appendRow (list (qg.QStandardItem
-							(dot (string "ch{}")
-							     (format j))))))
-			  (self.model.appendRow parent)
-			  (self.tree_view.setFirstColumnSpanned
-			   i
-			   (self.tree_view.rootIndex)
-			   True))
+		     ,@(loop for e in '(attrs) and i from 0 collect
+			    `(do0
+			     (setf parent (qg.QStandardItem
+					   (string ,e)))
+			     (for ((ntuple key value)
+				   (dot ctx ,e (viewitems)))
+				  (parent.appendRow
+				   (list (qg.QStandardItem
+					  (dot (string "{}")
+					       (format key)))
+					 (qg.QStandardItem
+					  (dot (string "{}")
+					       (format value))))))
+			     (self.model.appendRow parent)
+			     (self.tree_view.setFirstColumnSpanned
+			      ,i
+			      (self.tree_view.rootIndex)
+			      True)))
 		     (do0
 		      (setf self.main_layout (qw.QHBoxLayout))
 		      (self.main_layout.addWidget self.tree_view)
@@ -220,7 +228,7 @@ Options:
 	    
 	    (do0		 ;if (== __name__ (string "__main__"))
 	     (setf app (qw.QApplication sys.argv)
-		   widget (DictTreeView (list))
+		   widget (PlutoTreeView ctx)
 		   #+nil(PandasView (dot (aref df.iloc 0)
 					   (to_frame)))
 		   win (MainWindow widget))

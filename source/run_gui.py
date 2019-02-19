@@ -29,56 +29,19 @@ import iio
 args=docopt.docopt(__doc__, version="0.0.1")
 if ( args["--verbose"] ):
     print(args)
-class PandasTableModel(qc.QAbstractTableModel):
-    def __init__(self, dataframe, parent=None):
-        qc.QAbstractTableModel.__init__(self)
-        self.dataframe=dataframe
-    def flags(self, index):
-        if ( not(index.isValid()) ):
-            return None
-        return ((qc.Qt.ItemIsEnabled) or (qc.Qt.ItemIsSelectable))
-    def rowCount(self, *args, **kwargs):
-        return len(self.dataframe.index)
-    def columnCount(self, *args, **kwargs):
-        return len(self.dataframe.columns)
-    def headerData(self, section, orientation, role):
-        if ( ((qc.Qt.DisplayRole)!=(role)) ):
-            return None
-        try:
-            if ( ((qc.Qt.Horizontal)==(orientation)) ):
-                return list(self.dataframe.columns)[section]
-            if ( ((qc.Qt.Vertical)==(orientation)) ):
-                return list(self.dataframe.index)[section]
-        except IndexError:
-            return None
-    def data(self, index, role):
-        if ( ((qc.Qt.DisplayRole)!=(role)) ):
-            return None
-        if ( not(index.isValid()) ):
-            return None
-        return str(self.dataframe.iloc[index.row(),index.column()])
-class PandasView(qw.QWidget):
-    def __init__(self, df):
-        super(PandasView, self).__init__()
-        self.model=PandasTableModel(df)
-        self.table_view=qw.QTableView()
-        self.table_view.setModel(self.model)
-        self.main_layout=qw.QHBoxLayout()
-        self.main_layout.addWidget(self.table_view)
-        self.setLayout(self.main_layout)
-class DictTreeView(qw.QWidget):
-    def __init__(self, dics):
-        super(DictTreeView, self).__init__()
+class PlutoTreeView(qw.QWidget):
+    def __init__(self, ctx):
+        super(PlutoTreeView, self).__init__()
         self.model=qg.QStandardItemModel()
         self.tree_view=qw.QTreeView()
+        self.model.setHorizontalHeaderLabels(["key", "value"])
         self.tree_view.setModel(self.model)
         self.tree_view.setUniformRowHeights(True)
-        for i in range(3):
-            parent=qg.QStandardItem("dev{}".format(i))
-            for j in range(2):
-                parent.appendRow([qg.QStandardItem("ch{}".format(j))])
-            self.model.appendRow(parent)
-            self.tree_view.setFirstColumnSpanned(i, self.tree_view.rootIndex(), True)
+        parent=qg.QStandardItem("attrs")
+        for key, value in ctx.attrs.viewitems():
+            parent.appendRow([qg.QStandardItem("{}".format(key)), qg.QStandardItem("{}".format(value))])
+        self.model.appendRow(parent)
+        self.tree_view.setFirstColumnSpanned(0, self.tree_view.rootIndex(), True)
         self.main_layout=qw.QHBoxLayout()
         self.main_layout.addWidget(self.tree_view)
         self.setLayout(self.main_layout)
@@ -99,7 +62,7 @@ print(ctx.name)
 print(ctx.attrs)
 df=pd.DataFrame([ctx.attrs])
 app=qw.QApplication(sys.argv)
-widget=DictTreeView([])
+widget=PlutoTreeView(ctx)
 win=MainWindow(widget)
 win.show()
 sys.exit(app.exec_())
