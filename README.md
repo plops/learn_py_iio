@@ -37,3 +37,4 @@ CMakeFiles  Makefile  build  cmake_install.cmake  setup.py
 * broadcom wifi as sdr https://github.com/seemoo-lab/mobisys2018_nexmon_software_defined_radio
 * https://www.analog.com/media/en/technical-documentation/data-sheets/ad9364.pdf datasheet
 * https://ez.analog.com/university-program/f/q-a/97283/ad9361-iiostream-on-adalm-pluto bare metal transmitting
+* https://archive.fosdem.org/2018/schedule/event/plutosdr/attachments/slides/2503/export/events/attachments/plutosdr/slides/2503/pluto_stupid_tricks.pdf fosdem 2018 slides
