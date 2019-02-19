@@ -94,10 +94,39 @@ Options:
 			   self.table_view (qw.QTableView)
 			   )
 		     (self.table_view.setModel self.model)
-		     (setf self.main_layout (qw.QHBoxLayout))
-		     (self.main_layout.addWidget self.table_view)
-		     (self.setLayout self.main_layout)
+		     (do0
+		      (setf self.main_layout (qw.QHBoxLayout))
+		      (self.main_layout.addWidget self.table_view)
+		      (self.setLayout self.main_layout))
 		     ))
+
+	    (class DictTreeView (qw.QWidget)
+		   (def __init__ (self dics)
+		     (dot (super DictTreeView self)
+			  (__init__))
+		     (setf self.model (qg.QStandardItemModel)
+			   self.tree_view (qw.QTreeView))
+		     (self.tree_view.setModel self.model)
+		     (self.tree_view.setUniformRowHeights True)
+		     (for (i (range 3))
+			  (setf parent (qg.QStandardItem
+					(dot (string "dev{}")
+					     (format i))))
+			  (for (j (range 2))
+			       (parent.appendRow (list (qg.QStandardItem
+							(dot (string "ch{}")
+							     (format j))))))
+			  (self.model.appendRow parent)
+			  (self.tree_view.setFirstColumnSpanned
+			   i
+			   (self.tree_view.rootIndex)
+			   True))
+		     (do0
+		      (setf self.main_layout (qw.QHBoxLayout))
+		      (self.main_layout.addWidget self.tree_view)
+		      (self.setLayout self.main_layout))
+		     ))
+	    
 	    (class MainWindow (qw.QMainWindow)
 		   (def __init__ (self widget)
 		     (dot (super MainWindow self) (__init__))
@@ -191,7 +220,8 @@ Options:
 	    
 	    (do0		 ;if (== __name__ (string "__main__"))
 	     (setf app (qw.QApplication sys.argv)
-		   widget (PandasView (dot (aref df.iloc 0)
+		   widget (DictTreeView (list))
+		   #+nil(PandasView (dot (aref df.iloc 0)
 					   (to_frame)))
 		   win (MainWindow widget))
 	     

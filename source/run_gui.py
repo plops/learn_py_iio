@@ -66,6 +66,22 @@ class PandasView(qw.QWidget):
         self.main_layout=qw.QHBoxLayout()
         self.main_layout.addWidget(self.table_view)
         self.setLayout(self.main_layout)
+class DictTreeView(qw.QWidget):
+    def __init__(self, dics):
+        super(DictTreeView, self).__init__()
+        self.model=qg.QStandardItemModel()
+        self.tree_view=qw.QTreeView()
+        self.tree_view.setModel(self.model)
+        self.tree_view.setUniformRowHeights(True)
+        for i in range(3):
+            parent=qg.QStandardItem("dev{}".format(i))
+            for j in range(2):
+                parent.appendRow([qg.QStandardItem("ch{}".format(j))])
+            self.model.appendRow(parent)
+            self.tree_view.setFirstColumnSpanned(i, self.tree_view.rootIndex(), True)
+        self.main_layout=qw.QHBoxLayout()
+        self.main_layout.addWidget(self.tree_view)
+        self.setLayout(self.main_layout)
 class MainWindow(qw.QMainWindow):
     def __init__(self, widget):
         super(MainWindow, self).__init__()
@@ -83,7 +99,7 @@ print(ctx.name)
 print(ctx.attrs)
 df=pd.DataFrame([ctx.attrs])
 app=qw.QApplication(sys.argv)
-widget=PandasView(df.iloc[0].to_frame())
+widget=DictTreeView([])
 win=MainWindow(widget)
 win.show()
 sys.exit(app.exec_())
