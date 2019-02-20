@@ -306,6 +306,20 @@ Options:
 		   dev (ctx.find_device (string "cf-ad9361-lpc"))
 		   phy (ctx.find_device (string "ad9361-phy"))
 		   )
+	     (do0
+	      (setf (dot dev
+			 (aref channels 0)
+			 enabled)
+		    True
+		    (dot dev
+			 (aref channels 1)
+			 enabled)
+		    True
+		    buf (iio.Buffer dev 4096 :cyclic False)
+		    )
+	      (buf.refill)
+	      (setf x (buf.read)
+		    d (np.frombuffer x :dtype np.int16)))
 	     ;(print iio.version)
 	     ;(print ctx.name)
 	     ;(print ctx.attrs)

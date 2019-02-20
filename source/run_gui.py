@@ -84,6 +84,12 @@ uri=next(iter(ctxs), None)
 ctx=iio.Context(uri)
 dev=ctx.find_device("cf-ad9361-lpc")
 phy=ctx.find_device("ad9361-phy")
+dev.channels[0].enabled=True
+dev.channels[1].enabled=True
+buf=iio.Buffer(dev, 4096, cyclic=False)
+buf.refill()
+x=buf.read()
+d=np.frombuffer(x, dtype=np.int16)
 import xml.etree.ElementTree
 ctx_xml=xml.etree.ElementTree.fromstring(ctx.xml)
 df=pd.DataFrame([ctx.attrs])
