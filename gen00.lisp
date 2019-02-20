@@ -138,7 +138,10 @@ Options:
 						   (format dev.name)))
 					     ))
 				  (if (< 0 (len dev.attrs))
-				      (for ((ntuple k v) (dev.attrs.viewitems))
+				      (for ((ntuple k v)
+					    (sorted (dev.attrs.iteritems)
+						    (lambda (a b)
+							   (cmp a b))))
 					   (try
 					    (do0
 					     (setf val v.value)
@@ -155,7 +158,10 @@ Options:
 					  (dot (string "{}")
 					       (format val)))))))
 				  (if (< 0 (len dev.debug_attrs))
-				      (for ((ntuple k v) (dev.debug_attrs.viewitems))
+				      (for ((ntuple k v)
+					    (sorted (dev.debug_attrs.iteritems)
+						    (lambda (a b)
+						      (cmp a b))))
 					   (try
 					    (do0
 					     (setf val v.value)

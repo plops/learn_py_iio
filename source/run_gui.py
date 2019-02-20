@@ -45,14 +45,14 @@ class PlutoTreeView(qw.QWidget):
         for dev in ctx.devices:
             l=[qg.QStandardItem("{}".format(dev.name))]
             if ( ((0)<(len(dev.attrs))) ):
-                for k, v in dev.attrs.viewitems():
+                for k, v in sorted(dev.attrs.iteritems(), lambda a, b: cmp(a, b)):
                     try:
                         val=v.value
                     except OSError as e:
                         val=e
                     (l[0].appendRow)(([qg.QStandardItem("{}".format(k)), qg.QStandardItem("{}".format(val))]))
             if ( ((0)<(len(dev.debug_attrs))) ):
-                for k, v in dev.debug_attrs.viewitems():
+                for k, v in sorted(dev.debug_attrs.iteritems(), lambda a, b: cmp(a, b)):
                     try:
                         val=v.value
                     except OSError as e:
