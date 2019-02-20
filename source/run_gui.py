@@ -34,7 +34,7 @@ class PlutoTreeView(qw.QWidget):
         super(PlutoTreeView, self).__init__()
         self.model=qg.QStandardItemModel()
         self.tree_view=qw.QTreeView()
-        self.model.setHorizontalHeaderLabels(["key", "value", "name", "output"])
+        self.model.setHorizontalHeaderLabels(["key", "value", "name", "output", "enabled"])
         self.tree_view.setModel(self.model)
         self.tree_view.setUniformRowHeights(True)
         parent=qg.QStandardItem("attrs")
@@ -52,7 +52,7 @@ class PlutoTreeView(qw.QWidget):
                     except OSError as e:
                         val=e
                     id.appendRow([qg.QStandardItem("{}".format(k)), qg.QStandardItem("{}".format(val)), qg.QStandardItem("{}".format(v.filename))])
-                (l[0].appendRow)(([id, qg.QStandardItem("-"), qg.QStandardItem("{}".format(ch.name)), qg.QStandardItem("{}".format(ch.output))]))
+                (l[0].appendRow)(([id, qg.QStandardItem("-"), qg.QStandardItem("{}".format(ch.name)), qg.QStandardItem("{}".format(ch.output)), qg.QStandardItem("{}".format(ch.enabled))]))
             if ( ((0)<(len(dev.attrs))) ):
                 for k, v in sorted(dev.attrs.iteritems(), lambda a, b: cmp(a, b)):
                     try:

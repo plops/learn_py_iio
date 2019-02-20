@@ -107,7 +107,7 @@ Options:
 		     (setf self.model (qg.QStandardItemModel)
 			   self.tree_view (qw.QTreeView))
 		     (self.model.setHorizontalHeaderLabels
-		      (list (string "key") (string "value") (string "name") (string "output")))
+		      (list (string "key") (string "value") (string "name") (string "output") (string "enabled")))
 		     (self.tree_view.setModel self.model)
 		     
 		     (self.tree_view.setUniformRowHeights True)
@@ -169,7 +169,10 @@ Options:
 						   (format ch.name)))
 					     (qg.QStandardItem
 					      (dot (string "{}")
-						   (format ch.output))))))
+						   (format ch.output)))
+					     (qg.QStandardItem
+					      (dot (string "{}")
+						   (format ch.enabled))))))
 				  (if (< 0 (len dev.attrs))
 				      (for ((ntuple k v)
 					    (sorted (dev.attrs.iteritems)
