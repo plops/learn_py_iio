@@ -163,7 +163,8 @@ Options:
 					    (list
 					     id
 					     (qg.QStandardItem
-					      (string "-"))
+					      (dot (string "{} [scan]")
+						   (format ch.scan_element)))
 					     (qg.QStandardItem
 					      (dot (string "{}")
 						   (format ch.name)))

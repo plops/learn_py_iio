@@ -39,3 +39,4 @@ CMakeFiles  Makefile  build  cmake_install.cmake  setup.py
 * https://ez.analog.com/university-program/f/q-a/97283/ad9361-iiostream-on-adalm-pluto bare metal transmitting
 * https://archive.fosdem.org/2018/schedule/event/plutosdr/attachments/slides/2503/export/events/attachments/plutosdr/slides/2503/pluto_stupid_tricks.pdf fosdem 2018 slides, board pics, 64 qam, RXO3225M 40MHz oscillator,
 * https://www.analog.com/media/en/training-seminars/design-handbooks/Software-Defined-Radio-for-Engineers-2018/SDR4Engineers.pdf adc only has 4.5bits, half band filters bring it up to 12 bits, they show timing recovery with all-digital pll, carrier recovery, 802.11a WLAN receiver
+* https://wiki.analog.com/resources/tools-software/linux-software/libiio_internals docs on libiio
