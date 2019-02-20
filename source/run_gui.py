@@ -45,7 +45,14 @@ class PlutoTreeView(qw.QWidget):
         for dev in ctx.devices:
             l=[qg.QStandardItem("{}".format(dev.name))]
             for ch in dev.channels:
-                (l[0].appendRow)(([qg.QStandardItem("{}".format(ch.id)), qg.QStandardItem("-"), qg.QStandardItem("{}".format(ch.name)), qg.QStandardItem("{}".format(ch.output))]))
+                id=qg.QStandardItem("{}".format(ch.id))
+                for k, v in sorted(ch.attrs.iteritems(), lambda a, b: cmp(a, b)):
+                    try:
+                        val=v.value
+                    except OSError as e:
+                        val=e
+                    id.appendRow([qg.QStandardItem("{}".format(k)), qg.QStandardItem("{}".format(val)), qg.QStandardItem("{}".format(v.filename))])
+                (l[0].appendRow)(([id, qg.QStandardItem("-"), qg.QStandardItem("{}".format(ch.name)), qg.QStandardItem("{}".format(ch.output))]))
             if ( ((0)<(len(dev.attrs))) ):
                 for k, v in sorted(dev.attrs.iteritems(), lambda a, b: cmp(a, b)):
                     try:

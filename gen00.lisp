@@ -137,12 +137,31 @@ Options:
 						 (dot (string "{}")
 						      (format dev.name)))))
 				  (for (ch dev.channels)
+				       (setf id (qg.QStandardItem
+					      (dot (string "{}")
+						   (format ch.id))))
+				       (for ((ntuple k v)
+					     (sorted (ch.attrs.iteritems)
+						     (lambda (a b)
+						       (cmp a b))))
+					    (try
+					    (do0 (setf val v.value))
+					    ("OSError as e" (setf val e)))
+					    
+					    (id.appendRow
+					     (list (qg.QStandardItem
+					       (dot (string "{}")
+						    (format k)))
+						   (qg.QStandardItem
+						    (dot (string "{}")
+							 (format val)))
+						   (qg.QStandardItem
+						    (dot (string "{}")
+							 (format v.filename))))))
+				       
 				       ((dot (aref l 0) appendRow)
 					    (list
-					     (qg.QStandardItem
-					      (dot (string "{}")
-						   (format ch.id))
-					      )
+					     id
 					     (qg.QStandardItem
 					      (string "-"))
 					     (qg.QStandardItem
