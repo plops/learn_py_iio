@@ -107,7 +107,7 @@ Options:
 		     (setf self.model (qg.QStandardItemModel)
 			   self.tree_view (qw.QTreeView))
 		     (self.model.setHorizontalHeaderLabels
-		      (list (string "key") (string "value")))
+		      (list (string "key") (string "value") (string "name") (string "output")))
 		     (self.tree_view.setModel self.model)
 		     
 		     (self.tree_view.setUniformRowHeights True)
@@ -134,29 +134,39 @@ Options:
 					   (string devices)))
 			     (for (dev ctx.devices)
 				  (setf l (list (qg.QStandardItem
+						 (dot (string "{}")
+						      (format dev.name)))))
+				  (for (ch dev.channels)
+				       ((dot (aref l 0) appendRow)
+					    (list
+					     (qg.QStandardItem
 					      (dot (string "{}")
-						   (format dev.name)))
-					     ))
+						   (format ch.id))
+					      )
+					     (qg.QStandardItem
+					      (string "-"))
+					     (qg.QStandardItem
+					      (dot (string "{}")
+						   (format ch.name)))
+					     (qg.QStandardItem
+					      (dot (string "{}")
+						   (format ch.output))))))
 				  (if (< 0 (len dev.attrs))
 				      (for ((ntuple k v)
 					    (sorted (dev.attrs.iteritems)
 						    (lambda (a b)
 							   (cmp a b))))
 					   (try
-					    (do0
-					     (setf val v.value)
-					     )
-					    ("OSError as e"
-					     (setf val e)))
-					   ((dot (aref l 0)
-					     appendRow)
-					(list
-					 (qg.QStandardItem
-					  (dot (string "{}")
-					       (format k)))
-					 (qg.QStandardItem
-					  (dot (string "{}")
-					       (format val)))))))
+					    (do0 (setf val v.value))
+					    ("OSError as e" (setf val e)))
+					   ((dot (aref l 0) appendRow)
+					    (list
+					     (qg.QStandardItem
+					      (dot (string "{}")
+						   (format k)))
+					     (qg.QStandardItem
+					      (dot (string "{}")
+						   (format val)))))))
 				  (if (< 0 (len dev.debug_attrs))
 				      (for ((ntuple k v)
 					    (sorted (dev.debug_attrs.iteritems)
@@ -178,8 +188,7 @@ Options:
 					  (dot (string "{}")
 					       (format val)))))))
 				  
-				  (parent.appendRow
-				   l))
+				  (parent.appendRow l))
 			     (self.model.appendRow parent))
 		     
 
@@ -275,9 +284,9 @@ Options:
 		   dev (ctx.find_device (string "cf-ad9361-lpc"))
 		   phy (ctx.find_device (string "ad9361-phy"))
 		   )
-	     (print iio.version)
-	     (print ctx.name)
-	     (print ctx.attrs)
+	     ;(print iio.version)
+	     ;(print ctx.name)
+	     ;(print ctx.attrs)
 	     (imports (xml.etree.ElementTree))
 	     (setf ctx_xml (xml.etree.ElementTree.fromstring ctx.xml)))
 	    (setf df (pd.DataFrame (list ctx.attrs)))

@@ -34,7 +34,7 @@ class PlutoTreeView(qw.QWidget):
         super(PlutoTreeView, self).__init__()
         self.model=qg.QStandardItemModel()
         self.tree_view=qw.QTreeView()
-        self.model.setHorizontalHeaderLabels(["key", "value"])
+        self.model.setHorizontalHeaderLabels(["key", "value", "name", "output"])
         self.tree_view.setModel(self.model)
         self.tree_view.setUniformRowHeights(True)
         parent=qg.QStandardItem("attrs")
@@ -44,6 +44,8 @@ class PlutoTreeView(qw.QWidget):
         parent=qg.QStandardItem("devices")
         for dev in ctx.devices:
             l=[qg.QStandardItem("{}".format(dev.name))]
+            for ch in dev.channels:
+                (l[0].appendRow)(([qg.QStandardItem("{}".format(ch.id)), qg.QStandardItem("-"), qg.QStandardItem("{}".format(ch.name)), qg.QStandardItem("{}".format(ch.output))]))
             if ( ((0)<(len(dev.attrs))) ):
                 for k, v in sorted(dev.attrs.iteritems(), lambda a, b: cmp(a, b)):
                     try:
@@ -75,9 +77,6 @@ uri=next(iter(ctxs), None)
 ctx=iio.Context(uri)
 dev=ctx.find_device("cf-ad9361-lpc")
 phy=ctx.find_device("ad9361-phy")
-print(iio.version)
-print(ctx.name)
-print(ctx.attrs)
 import xml.etree.ElementTree
 ctx_xml=xml.etree.ElementTree.fromstring(ctx.xml)
 df=pd.DataFrame([ctx.attrs])
