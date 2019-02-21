@@ -1,7 +1,7 @@
 (eval-when (:compile-toplevel :execute :load-toplevel)
   (ql:quickload "cl-py-generator"))
 (in-package :cl-py-generator)
-
+;; this program can not run simultaneously with sdrangel
 (progn
   (defparameter *path* "/home/martin/stage/learn_py_iio")
   (defparameter *code-file* "run_gui")
