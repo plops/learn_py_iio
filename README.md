@@ -110,3 +110,13 @@ sshpass -p analog ssh -o StrictHostKeyChecking=no,UserKnownHostsFile=/dev/null r
 ## modify firmware and link applications
 
 https://archive.fosdem.org/2018/schedule/event/plutosdr/attachments/slides/2503/export/events/attachments/plutosdr/slides/2503/pluto_stupid_tricks.pdf
+
+
+# network analyzer
+
+# gps antenna
+
+https://www.youtube.com/watch?v=eVI2qv7pv88
+section 3.2 in https://www.u-blox.com/sites/default/files/products/documents/GPS-Antenna_AppNote_%28GPS-X-08014%29.pdf?utm_source=en%2Fimages%2Fdownloads%2FProduct_Docs%2FGPS_Antennas_ApplicationNote%28GPS-X-08014%29.pdf      
+
+# gps bandpass
