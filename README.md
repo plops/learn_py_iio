@@ -49,10 +49,10 @@ https://wiki.analog.com/university/tools/pluto/users/firmware
 
 https://wiki.analog.com/university/tools/pluto/devs/reboot
 
-pacman -S dfu-util
+pacman -S dfu-util sshpass
 wget https://github.com/analogdevicesinc/plutosdr-fw/releases/download/v0.31/plutosdr-fw-v0.31.zip
-ssh root@192.168.2.1
-# password: analog
+sshpass -p analog ssh root@192.168.2.1
+
 
 device_reboot ram
 
@@ -61,6 +61,41 @@ When the device is in DFU mode, the DONE LED is OFF, while LED1 is constantly ON
 ~/stage/learn_py_iio $ lsusb
 Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
 Bus 001 Device 008: ID 0456:b674 Analog Devices, Inc.
+
+
+sudo dfu-util -l
+sudo dfu-util -d 0456:b673,0456:b674 -D pluto.dfu -a firmware.dfu
+sudo dfu-util -d 0456:b673,0456:b674  -a firmware.dfu -e
+
+
+
+Opening DFU capable USB device...
+ID 0456:b674
+Run-time device DFU version 0110
+Claiming USB DFU Interface...
+Setting Alternate Setting #1 ...
+Determining device status: state = dfuIDLE, status = 0
+dfuIDLE, continuing
+DFU mode device DFU version 0110
+Device returned transfer size 4096
+Copying data from PC to DFU device
+Download	[=========================] 100%     10100803 bytes
+Download done.
+state(7) = dfuMANIFEST, status(0) = No error condition is present
+state(2) = dfuIDLE, status(0) = No error condition is present
+Done!
+
+
+
+Opening DFU capable USB device...
+ID 0456:b674
+Run-time device DFU version 0110
+Claiming USB DFU Interface...
+Setting Alternate Setting #1 ...
+Determining device status: state = dfuIDLE, status = 0
+dfuIDLE, continuing
+DFU mode device DFU version 0110
+Device returned transfer size 4096
 
 
 ## modify firmware and link applications
