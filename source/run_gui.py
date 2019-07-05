@@ -90,9 +90,9 @@ buf=iio.Buffer(dev, 4096, cyclic=False)
 buf.refill()
 x=buf.read()
 d=np.frombuffer(x, dtype=np.int16)
+# the xml data seems to contain the complete configuration
 import xml.etree.ElementTree
 ctx_xml=xml.etree.ElementTree.fromstring(ctx.xml)
-df=pd.DataFrame([ctx.attrs])
 app=qw.QApplication(sys.argv)
 widget=PlutoTreeView(ctx)
 win=MainWindow(widget)

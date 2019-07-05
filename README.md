@@ -40,3 +40,29 @@ CMakeFiles  Makefile  build  cmake_install.cmake  setup.py
 * https://archive.fosdem.org/2018/schedule/event/plutosdr/attachments/slides/2503/export/events/attachments/plutosdr/slides/2503/pluto_stupid_tricks.pdf fosdem 2018 slides, board pics, 64 qam, RXO3225M 40MHz oscillator,
 * https://www.analog.com/media/en/training-seminars/design-handbooks/Software-Defined-Radio-for-Engineers-2018/SDR4Engineers.pdf adc only has 4.5bits, half band filters bring it up to 12 bits, they show timing recovery with all-digital pll, carrier recovery, 802.11a WLAN receiver
 * https://wiki.analog.com/resources/tools-software/linux-software/libiio_internals docs on libiio, explains cyclic buffers (only useful for TX), iiod interface
+
+# Firmware upgrade
+
+https://wiki.analog.com/university/tools/pluto/users/firmware
+
+## into ram
+
+https://wiki.analog.com/university/tools/pluto/devs/reboot
+
+pacman -S dfu-util
+wget https://github.com/analogdevicesinc/plutosdr-fw/releases/download/v0.31/plutosdr-fw-v0.31.zip
+ssh root@192.168.2.1
+# password: analog
+
+device_reboot ram
+
+When the device is in DFU mode, the DONE LED is OFF, while LED1 is constantly ON. The device switches it’s USB PID to 0xB674 (PlutoSDR DFU)
+
+~/stage/learn_py_iio $ lsusb
+Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+Bus 001 Device 008: ID 0456:b674 Analog Devices, Inc.
+
+
+## modify firmware and link applications
+
+https://archive.fosdem.org/2018/schedule/event/plutosdr/attachments/slides/2503/export/events/attachments/plutosdr/slides/2503/pluto_stupid_tricks.pdf

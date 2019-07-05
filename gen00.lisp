@@ -1,7 +1,7 @@
 (eval-when (:compile-toplevel :execute :load-toplevel)
   (ql:quickload "cl-py-generator"))
 (in-package :cl-py-generator)
-;; this program can not run simultaneously with sdrangel
+;; this program can not run simultaneously with sdrangel, while sdrangel is connnected to pluto
 (progn
   (defparameter *path* "/home/martin/stage/learn_py_iio")
   (defparameter *code-file* "run_gui")
@@ -323,9 +323,12 @@ Options:
 		    d (np.frombuffer x :dtype np.int16)))
 	     ;(print iio.version)
 	     ;(print ctx.name)
-	     ;(print ctx.attrs)
-	     (imports (xml.etree.ElementTree))
-	     (setf ctx_xml (xml.etree.ElementTree.fromstring ctx.xml)))
+					;(print ctx.attrs)
+	     (do0
+	      "# the xml data seems to contain the complete configuration"
+	      (imports (xml.etree.ElementTree))
+	      (setf ctx_xml (xml.etree.ElementTree.fromstring ctx.xml))))
+	    #+nil
 	    (setf df (pd.DataFrame (list ctx.attrs)))
 	    
 	    (do0		 ;if (== __name__ (string "__main__"))
