@@ -48,6 +48,7 @@ CMakeFiles  Makefile  build  cmake_install.cmake  setup.py
 * https://www.mikrocontroller.net/topic/433236
 * https://www.eevblog.com/forum/rf-microwave/adalm-pluto-as-vhfuhf-spectrum-analyzer-and-a-tracking-generator/
   - tx and rx lo of ad9363 are different and not in phase
+* https://forum.amsat-dl.org/index.php?thread/2766-pluto-erweiterung-40mhz-vctcxo-0-28ppm-25mhz-ausgang-10mhz-gpsdo-ausgang/
 
 # Firmware upgrade
 
