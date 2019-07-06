@@ -42,6 +42,13 @@ CMakeFiles  Makefile  build  cmake_install.cmake  setup.py
 * https://wiki.analog.com/resources/tools-software/linux-software/libiio_internals docs on libiio, explains cyclic buffers (only useful for TX), iiod interface
 * https://github.com/demantz/RFAnalyzer android app for hackrf (maybe someone will make pluto available?)
 * https://wiki.analog.com/university/tools/pluto/users/phase_noise phase noise and drift measurements
+* https://www.youtube.com/watch?v=idW3ysqvMno digital tv
+* https://www.youtube.com/watch?v=z-onbp32U1Q nvidia dvb s2 decode 
+* https://forum.amsat-dl.org/index.php?thread/101-software-dvb-s-demodulator/
+* https://www.mikrocontroller.net/topic/433236
+* https://www.eevblog.com/forum/rf-microwave/adalm-pluto-as-vhfuhf-spectrum-analyzer-and-a-tracking-generator/
+  - tx and rx lo of ad9363 are different and not in phase
+
 # Firmware upgrade
 
 https://wiki.analog.com/university/tools/pluto/users/firmware
@@ -122,7 +129,9 @@ Robin Getz (Director Systems Engineering AD) https://www.youtube.com/watch?v=qMe
 https://archive.fosdem.org/2018/schedule/speaker/robin_getz/
 https://twitter.com/robinlgetz?lang=en
 
-Travis Collins (Dev Engineer AD) https://www.youtube.com/watch?v=R6PDIEslgZc
+Travis Collins (Dev Engineer AD, Dec 2017) https://www.youtube.com/watch?v=R6PDIEslgZc
+
+https://github.com/pcercuei
 
 ## what fits into the fpga?
 
