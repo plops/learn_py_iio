@@ -117,13 +117,22 @@ led1 is constant bright, the other off
 ## modify firmware and link applications
 
 https://archive.fosdem.org/2018/schedule/event/plutosdr/attachments/slides/2503/export/events/attachments/plutosdr/slides/2503/pluto_stupid_tricks.pdf
+Robin Getz (Director Systems Engineering AD) https://www.youtube.com/watch?v=qMeJS4gSIXo
+https://archive.fosdem.org/2018/schedule/speaker/robin_getz/
+https://twitter.com/robinlgetz?lang=en
 
+## what fits into the fpga?
+
+https://ez.analog.com/university-program/f/q-a/102291/reprogram-pluto-s-fpga-to-add-fft
+
+```The FPGA has at most 80 DSP slices if you remove the DDSs and decimation filter.```
 
 # network analyzer
 
 # gps antenna
 
-https://www.youtube.com/watch?v=eVI2qv7pv88
+ https://www.youtube.com/watch?v=eVI2qv7pv88 
+
 section 3.2 in https://www.u-blox.com/sites/default/files/products/documents/GPS-Antenna_AppNote_%28GPS-X-08014%29.pdf?utm_source=en%2Fimages%2Fdownloads%2FProduct_Docs%2FGPS_Antennas_ApplicationNote%28GPS-X-08014%29.pdf      
 
 # gps bandpass
