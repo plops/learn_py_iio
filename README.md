@@ -41,7 +41,7 @@ CMakeFiles  Makefile  build  cmake_install.cmake  setup.py
 * https://www.analog.com/media/en/training-seminars/design-handbooks/Software-Defined-Radio-for-Engineers-2018/SDR4Engineers.pdf adc only has 4.5bits, half band filters bring it up to 12 bits, they show timing recovery with all-digital pll, carrier recovery, 802.11a WLAN receiver
 * https://wiki.analog.com/resources/tools-software/linux-software/libiio_internals docs on libiio, explains cyclic buffers (only useful for TX), iiod interface
 * https://github.com/demantz/RFAnalyzer android app for hackrf (maybe someone will make pluto available?)
-
+* https://wiki.analog.com/university/tools/pluto/users/phase_noise phase noise and drift measurements
 # Firmware upgrade
 
 https://wiki.analog.com/university/tools/pluto/users/firmware
@@ -121,6 +121,8 @@ https://archive.fosdem.org/2018/schedule/event/plutosdr/attachments/slides/2503/
 Robin Getz (Director Systems Engineering AD) https://www.youtube.com/watch?v=qMeJS4gSIXo
 https://archive.fosdem.org/2018/schedule/speaker/robin_getz/
 https://twitter.com/robinlgetz?lang=en
+
+Travis Collins (Dev Engineer AD) https://www.youtube.com/watch?v=R6PDIEslgZc
 
 ## what fits into the fpga?
 
