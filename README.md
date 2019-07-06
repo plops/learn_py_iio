@@ -49,15 +49,19 @@ https://wiki.analog.com/university/tools/pluto/users/firmware
 
 https://wiki.analog.com/university/tools/pluto/devs/reboot
 
+```
 pacman -S dfu-util sshpass
+
 wget https://github.com/analogdevicesinc/plutosdr-fw/releases/download/v0.31/plutosdr-fw-v0.31.zip
 sshpass -p analog ssh -o StrictHostKeyChecking=no,UserKnownHostsFile=/dev/null root@192.168.2.1
 device_reboot ram
+```
 
 When the device is in DFU mode, the DONE LED is OFF, while LED1 is constantly ON. The device switches it’s USB PID to 0xB674 (PlutoSDR DFU)
 
 in ram mode LED1 is on (but not bright)
 
+```
 ~/stage/learn_py_iio $ lsusb
 Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
 Bus 001 Device 008: ID 0456:b674 Analog Devices, Inc.
@@ -99,12 +103,13 @@ Device returned transfer size 4096
 
 # uname -a
 Linux pluto 4.14.0-42540-g387d584 #301 SMP PREEMPT Wed Jul 3 15:06:53 CEST 2019 armv7l GNU/Linux
+```
 
 ## store firmware in flash
 
 sshpass -p analog ssh -o StrictHostKeyChecking=no,UserKnownHostsFile=/dev/null root@192.168.2.1 device_reboot sf
 
-# led1 is constant bright, the other off
+led1 is constant bright, the other off
 
 
 ## modify firmware and link applications
@@ -120,3 +125,5 @@ https://www.youtube.com/watch?v=eVI2qv7pv88
 section 3.2 in https://www.u-blox.com/sites/default/files/products/documents/GPS-Antenna_AppNote_%28GPS-X-08014%29.pdf?utm_source=en%2Fimages%2Fdownloads%2FProduct_Docs%2FGPS_Antennas_ApplicationNote%28GPS-X-08014%29.pdf      
 
 # gps bandpass
+
+epcos b9444 saw filter (50cent @ 15000) www.mouser.com/ds/2/400/B9444-525499.pdf
