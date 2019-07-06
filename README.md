@@ -107,7 +107,9 @@ Linux pluto 4.14.0-42540-g387d584 #301 SMP PREEMPT Wed Jul 3 15:06:53 CEST 2019 
 
 ## store firmware in flash
 
+```
 sshpass -p analog ssh -o StrictHostKeyChecking=no,UserKnownHostsFile=/dev/null root@192.168.2.1 device_reboot sf
+```
 
 led1 is constant bright, the other off
 
